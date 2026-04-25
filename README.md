@@ -10,7 +10,8 @@ judge, it just witnesses your actions in their full glory.
 
 Proving that you jumped a motorbike over a chasm last Monday? Establishing a
 date for your last will and testament? Or just rotating a public cryptographic
-key in your decentralized identifier document? Like a hopelessly loyal friend, `hmbd` has your back, no matter what you do.
+key in your decentralized identifier document? Like a hopelessly loyal friend,
+`hmbd` has your back, no matter what you do.
 
 Be glorious.
 
@@ -20,15 +21,21 @@ Be glorious.
 data, and it digitally signs that it saw that cryptographic hash at a particular
 point in time.
 
-Blind witnesses are a privacy-respecting way to prove that something happened at
-a certain point in time without revealing the details of the event. Blind
-witness proofs, which are digital signatures over a cryptographic hash, are used
-by systems that need to time-order a series of events. These proofs demonstrate
-to a verifier that the events happened in a particular order without the
-verifier having to trust you to prove the order. There can be many blind
-witnesses per event.
+Blind witnesses are privacy-respecting way to prove that something happened at a
+certain point in time without revealing the details of the event. Blind witness
+proofs, which are digital signatures over a cryptographic hash, are used by
+systems that need to time-order a series of events. These proofs demonstrate to
+a verifier that the events happened in a particular order without the verifier
+having to trust you to prove the order. There can be many blind witnesses per
+event.
 
 For example, to prove the edit history of a document, you could blind-witness
+its cryptographic hash after each change. A verifier reviewing a document change
+event just needs to trust at least one witness per change to verify the
+document's contents at that point in time. More witnesses means higher
+confidence. This is also useful for things like tracking the ownership history
+of a property like a car or a home. It can also be used to track the change
+history of something like a decentralized identifier document.
 its cryptographic hash after each change. A verifier reviewing a document change
 event just needs to trust at least one witness per change to verify the
 document's contents at that point in time. More witnesses means higher
