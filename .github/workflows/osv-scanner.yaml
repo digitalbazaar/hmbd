@@ -1,0 +1,27 @@
+# OSV-Scanner PR scanning reusable workflow, can be used as a PR action to detect new vulnerabilities being introduced.
+name: Use OSV to do SCA on main (daily) and PRs
+
+on:
+  pull_request:
+    branches: [main]
+  merge_group:
+    branches: [main]
+  schedule:
+    - cron: 0 0 * * *
+  push:
+    branches: [main]
+
+jobs:
+  ## run the following on PRs
+  osv-scan-pr:
+    uses: digitalbazaar/github-workflow-shared-action-osv-scanner/.github/workflows/osv-scanner-pr.yaml@a3f075f418e548dc2d55220acd7de23bdf8c4e70
+    permissions:
+      contents: read
+      pull-requests: write
+
+  ## run the following only on the main branch
+  osv-scan-main:
+    uses: digitalbazaar/github-workflow-shared-action-osv-scanner/.github/workflows/osv-scanner-main.yaml@a3f075f418e548dc2d55220acd7de23bdf8c4e70
+    permissions:
+      contents: read
+      issues: write
