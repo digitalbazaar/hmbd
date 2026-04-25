@@ -1,0 +1,28 @@
+/*!
+ * Copyright (c) 2024 Digital Bazaar, Inc. All rights reserved.
+ */
+import {config} from '@bedrock/core';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+import '@bedrock/https-agent';
+import '@bedrock/mongodb';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+config.mocha.tests.push(path.join(__dirname, 'test', 'mocha'));
+
+// mongodb config
+config.mongodb.name = 'hmbd_test';
+config.mongodb.host = 'localhost';
+config.mongodb.port = 27017;
+// drop all collections on initialization
+config.mongodb.dropCollections = {};
+config.mongodb.dropCollections.onInit = true;
+config.mongodb.dropCollections.collections = [];
+
+// HTTPS Agent
+config['https-agent'].rejectUnauthorized = false;
+
+config.hmbd.kms = {};
+config.hmbd.kms.baseUrl = `${config.server.baseUri}/kms`;
+config.hmbd.kms.ipAllowList = ['127.0.0.1/32', '::1/128'];
