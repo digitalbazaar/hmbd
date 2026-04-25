@@ -1,0 +1,48 @@
+{
+  "name": "hmbd",
+  "version": "0.0.1",
+  "description": "A service that performs blind witnessing",
+  "main": "./lib/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node --preserve-symlinks dev.js",
+    "lint": "eslint .",
+    "test": "npm run lint && npm run test-node",
+    "test-node": "cross-env NODE_ENV=test node --preserve-symlinks test.js test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitalbazaar/hmbd.git"
+  },
+  "dependencies": {
+    "@bedrock/config-yaml": "^4.3.3",
+    "@bedrock/core": "^6.3.0",
+    "@bedrock/express": "^8.3.1",
+    "@bedrock/health": "^4.1.0",
+    "@bedrock/https-agent": "^4.1.0",
+    "@bedrock/kms": "^16.0.0",
+    "@bedrock/kms-http": "^22.0.0",
+    "@bedrock/meter": "^6.0.0",
+    "@bedrock/meter-http": "^14.0.0",
+    "@bedrock/meter-usage-reporter": "^10.0.0",
+    "@bedrock/mongodb": "^11.0.0",
+    "@bedrock/server": "^5.1.0",
+    "@bedrock/service-core": "^11.0.0",
+    "@bedrock/ssm-mongodb": "^13.0.0",
+    "@bedrock/validation": "^7.1.1",
+    "base58-universal": "^2.0.0",
+    "canonicalize": "^2.1.0"
+  },
+  "devDependencies": {
+    "@bedrock/test": "^8.2.0",
+    "@digitalbazaar/did-method-key": "^5.2.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.1",
+    "eslint-config-digitalbazaar": "^5.2.0",
+    "eslint-plugin-jsdoc": "^50.6.8",
+    "eslint-plugin-unicorn": "^56.0.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
