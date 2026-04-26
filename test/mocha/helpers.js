@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2024 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2024-2026 Digital Bazaar, Inc.
  */
 import {agent} from '@bedrock/https-agent';
 import {encode as base58Encode} from 'base58-universal';
