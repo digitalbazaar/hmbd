@@ -18,6 +18,19 @@ export async function witnessInvalidDigest({digestMultibase, options} = {}) {
   return httpClient.post(url, {agent, json: body, throwHttpErrors: false});
 }
 
+export function assertProof(proof, {cryptosuite} = {}) {
+  proof.should.be.an('object');
+  proof.type.should.equal('DataIntegrityProof');
+  if(cryptosuite) {
+    proof.cryptosuite.should.equal(cryptosuite);
+  }
+  proof.proofPurpose.should.equal('assertionMethod');
+  proof.verificationMethod.should.be.a('string');
+  proof.created.should.be.a('string');
+  proof.created.should.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
+  proof.proofValue.should.be.a('string');
+}
+
 export async function witness({document, options} = {}) {
   // canonicalize and SHA-256 hash the document, then encode as
   // base58btc-prefixed sha2-256 multihash (digestMultibase)

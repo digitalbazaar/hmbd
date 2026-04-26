@@ -4,26 +4,77 @@
 import * as helpers from './helpers.js';
 
 describe('witness API', () => {
-  it('witness a valid digestMultibase value', async () => {
+  it('witness a valid digestMultibase value (ecdsa-jcs-2019 default)',
+    async () => {
+      let err;
+      let result;
+
+      try {
+        result = await helpers.witness({document: {test: '123'}});
+      } catch(e) {
+        err = e;
+      }
+      assertNoError(err);
+      should.exist(result);
+      helpers.assertProof(result.proof, {cryptosuite: 'ecdsa-jcs-2019'});
+    });
+
+  it('witness a valid digestMultibase value (ecdsa-jcs-2019 explicit)',
+    async () => {
+      let err;
+      let result;
+
+      try {
+        result = await helpers.witness({
+          document: {test: '123'},
+          options: {cryptosuite: 'ecdsa-jcs-2019'}
+        });
+      } catch(e) {
+        err = e;
+      }
+      assertNoError(err);
+      should.exist(result);
+      helpers.assertProof(result.proof, {cryptosuite: 'ecdsa-jcs-2019'});
+    });
+
+  it('witness a valid digestMultibase value (ecdsa-rdfc-2019)', async () => {
     let err;
     let result;
 
     try {
-      result = await helpers.witness({document: {test: '123'}});
+      result = await helpers.witness({
+        document: {test: '123'},
+        options: {cryptosuite: 'ecdsa-rdfc-2019'}
+      });
     } catch(e) {
       err = e;
     }
     assertNoError(err);
     should.exist(result);
-    const {proof} = result;
-    proof.should.be.an('object');
-    proof.type.should.equal('DataIntegrityProof');
-    proof.proofPurpose.should.equal('assertionMethod');
-    proof.verificationMethod.should.be.a('string');
-    proof.created.should.be.a('string');
-    proof.created.should.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
-    proof.proofValue.should.be.a('string');
+    helpers.assertProof(result.proof, {cryptosuite: 'ecdsa-rdfc-2019'});
   });
+
+  it('ecdsa-jcs-2019 and ecdsa-rdfc-2019 produce different proofValues',
+    async () => {
+      let err;
+      let jcsResult;
+      let rdfcResult;
+
+      try {
+        // use same document so only the canonicalization differs
+        const document = {test: 'canonicalization-comparison'};
+        [jcsResult, rdfcResult] = await Promise.all([
+          helpers.witness({document, options: {cryptosuite: 'ecdsa-jcs-2019'}}),
+          helpers.witness({document, options: {cryptosuite: 'ecdsa-rdfc-2019'}})
+        ]);
+      } catch(e) {
+        err = e;
+      }
+      assertNoError(err);
+      jcsResult.proof.cryptosuite.should.equal('ecdsa-jcs-2019');
+      rdfcResult.proof.cryptosuite.should.equal('ecdsa-rdfc-2019');
+      jcsResult.proof.proofValue.should.not.equal(rdfcResult.proof.proofValue);
+    });
 
   it('fail to witness an invalid digestMultibase value', async () => {
     // wrong multibase prefix (not base58btc 'z')
