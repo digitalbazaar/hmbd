@@ -140,7 +140,7 @@ async function computeDigestMultibase(data) {
 }
 
 const digestMultibase = await computeDigestMultibase({hello: 'world'});
-// -> "zQmYtUc4iTCbbfVsNwkJAbdjLR5LHGNiFWdQQWpALFdwkY"
+// -> "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM"
 ```
 
 ### Calling the witness service with `curl`
@@ -152,7 +152,7 @@ identifies the witness instance (use `test` in development).
 
 ```bash
 curl --json '{
-  "digestMultibase": "zQmYtUc4iTCbbfVsNwkJAbdjLR5LHGNiFWdQQWpALFdwkY"
+  "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM"
 }' https://localhost:22443/witnesses/test/witness --insecure
 ```
 
@@ -160,7 +160,7 @@ curl --json '{
 
 ```bash
 curl --json '{
-  "digestMultibase": "zQmYtUc4iTCbbfVsNwkJAbdjLR5LHGNiFWdQQWpALFdwkY",
+  "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM",
   "options": {"cryptosuite": "ecdsa-jcs-2019"}
 }' https://localhost:22443/witnesses/test/witness --insecure
 ```
@@ -169,7 +169,7 @@ curl --json '{
 
 ```bash
 curl --json '{
-  "digestMultibase": "zQmYtUc4iTCbbfVsNwkJAbdjLR5LHGNiFWdQQWpALFdwkY",
+  "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM",
   "options": {"cryptosuite": "ecdsa-rdfc-2019"}
 }' https://localhost:22443/witnesses/test/witness --insecure
 ```
