@@ -9,6 +9,16 @@ export const witnessBody = {
   properties: {
     digestMultibase: {
       type: 'string'
+    },
+    options: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        cryptosuite: {
+          type: 'string',
+          enum: ['ecdsa-jcs-2019', 'ecdsa-rdfc-2019']
+        }
+      }
     }
   }
 };
