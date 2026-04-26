@@ -30,6 +30,7 @@
     "@bedrock/service-core": "^11.0.0",
     "@bedrock/ssm-mongodb": "^13.0.0",
     "@bedrock/validation": "^7.1.1",
+    "@digitalbazaar/data-integrity-context": "^2.0.1",
     "@digitalbazaar/ecdsa-jcs-2019-cryptosuite": "^1.0.0",
     "@digitalbazaar/ecdsa-multikey": "^1.8.0",
     "@digitalbazaar/ecdsa-rdfc-2019-cryptosuite": "^1.0.0",
