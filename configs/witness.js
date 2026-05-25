@@ -18,3 +18,5 @@ cfg.signing.keystoreId =
   `${cfg.kms.baseUrl}/keystores/hmbd-witness-keystore-v1`;
 cfg.signing.keyId =
   `${cfg.signing.keystoreId}/keys/hmbd-witness-signing-key-v1`;
+cfg.signing.mldsaKeyId =
+  `${cfg.signing.keystoreId}/keys/hmbd-witness-mldsa-signing-key-v1`;

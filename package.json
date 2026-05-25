@@ -14,6 +14,10 @@
     "type": "git",
     "url": "git+https://github.com/digitalbazaar/hmbd.git"
   },
+  "overrides": {
+    "@noble/hashes": "^1.4.0",
+    "@bedrock/bedrock-kms-module-core": "digitalbazaar/bedrock-kms-module-core#add-mldsa44"
+  },
   "dependencies": {
     "@bedrock/config-yaml": "^4.3.3",
     "@bedrock/core": "^6.3.0",
@@ -34,6 +38,8 @@
     "@digitalbazaar/ecdsa-jcs-2019-cryptosuite": "^1.0.0",
     "@digitalbazaar/ecdsa-multikey": "^1.8.0",
     "@digitalbazaar/ecdsa-rdfc-2019-cryptosuite": "^1.0.0",
+    "@digitalbazaar/mldsa-multikey": "digitalbazaar/mldsa-multikey#main",
+    "@digitalbazaar/mldsa44-jcs-2024-cryptosuite": "digitalbazaar/mldsa44-jcs-2024-cryptosuite#main",
     "@digitalbazaar/webkms-client": "^14.3.0",
     "base58-universal": "^2.0.0",
     "canonicalize": "^2.1.0",
