@@ -16,7 +16,8 @@ export const witnessBody = {
       properties: {
         cryptosuite: {
           type: 'string',
-          enum: ['ecdsa-jcs-2019', 'ecdsa-rdfc-2019', 'mldsa44-jcs-2024']
+          enum: ['ecdsa-jcs-2019', 'ecdsa-rdfc-2019', 'mldsa44-jcs-2024',
+            'mldsa44-rdfc-2024']
         }
       }
     }
