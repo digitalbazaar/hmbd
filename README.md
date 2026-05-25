@@ -227,7 +227,7 @@ All requests return a `DataIntegrityProof` in the response body.
     "type": "DataIntegrityProof",
     "cryptosuite": "ecdsa-jcs-2019",
     "proofPurpose": "assertionMethod",
-    "verificationMethod": "did:key:zDnae...#public-key",
+    "verificationMethod": "did:key:zDnae...#vm",
     "created": "2026-04-26T16:00:00Z",
     "proofValue": "zDnae..."
   }
