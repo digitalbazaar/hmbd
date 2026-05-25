@@ -16,7 +16,7 @@
   },
   "overrides": {
     "@noble/hashes": "^1.4.0",
-    "@bedrock/bedrock-kms-module-core": "digitalbazaar/bedrock-kms-module-core#add-mldsa44"
+    "@bedrock/kms-module-core": "digitalbazaar/bedrock-kms-module-core#add-mldsa44"
   },
   "dependencies": {
     "@bedrock/config-yaml": "^4.3.3",
