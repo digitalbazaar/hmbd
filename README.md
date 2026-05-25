@@ -56,10 +56,11 @@ history of something like a decentralized identifier document.
 
 You are encouraged to call this service other things, like:
 
-* Hold My Beer, Daemon
+* The Hold My Beer Daemon
+* Her Majesty's Best Diva
 * Hold My Brewski, Dude
-* Hold My Bellini, Diva
-* Harbor Me Boilermaker, Dawg
+* Hold My Bellini, Donna (said in a thick Italian accent)
+* Harbor Me Boilermaker, Dawg (Brooklyn accent, naturally)
 
 ... and so on; as long as it's funny.
 
@@ -94,7 +95,8 @@ npm start
 ```
 
 On first start the service will automatically create a WebKMS keystore and
-generate a P-256 signing key.
+generate a P-256 signing key for ECDSA cryptosuites and an ML-DSA-44 signing
+key for post-quantum cryptosuites.
 
 The development server configuration lives in `configs/` and `dev.js`. The
 relevant defaults are:
@@ -114,19 +116,23 @@ be a permissioned endpoint to rate limit calls to the service.
 ### Computing a `digestMultibase` on the client side
 
 The witness endpoint accepts a `digestMultibase`: a base58btc-encoded
-sha2-256 multihash of the data you want to witness. To compute one in
-JavaScript:
+sha2-256 multihash of the data you want to witness. The hash must be computed
+using the same canonicalization algorithm as the requested cryptosuite — JCS
+for `*-jcs-*` suites and RDFC-1.0 for `*-rdfc-*` suites.
+
+#### JCS cryptosuites (`ecdsa-jcs-2019`, `mldsa44-jcs-2024`)
 
 ```js
 import crypto from 'node:crypto';
 import {encode as base58Encode} from 'base58-universal';
+import canonicalize from 'canonicalize';
 
 // sha2-256 multihash header: function code 0x12, digest size 32 (0x20)
 const SHA2_256_HEADER = new Uint8Array([0x12, 0x20]);
 
-async function computeDigestMultibase(data) {
-  // serialize and hash the data
-  const bytes = new TextEncoder().encode(JSON.stringify(data));
+async function computeDigestMultibaseJcs(document) {
+  // JCS-canonicalize, then SHA-256 hash
+  const bytes = new TextEncoder().encode(canonicalize(document));
   const hashBytes = new Uint8Array(
     crypto.createHash('sha256').update(bytes).digest());
 
@@ -138,9 +144,39 @@ async function computeDigestMultibase(data) {
   // encode as base58btc multibase (leading 'z')
   return 'z' + base58Encode(mhBytes);
 }
+```
 
-const digestMultibase = await computeDigestMultibase({hello: 'world'});
-// -> "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM"
+#### RDFC cryptosuites (`ecdsa-rdfc-2019`, `mldsa44-rdfc-2024`)
+
+```js
+import crypto from 'node:crypto';
+import {encode as base58Encode} from 'base58-universal';
+import jsonld from 'jsonld';
+import rdfCanonize from 'rdf-canonize';
+
+// sha2-256 multihash header: function code 0x12, digest size 32 (0x20)
+const SHA2_256_HEADER = new Uint8Array([0x12, 0x20]);
+
+async function computeDigestMultibaseRdfc(document) {
+  // RDFC-1.0-canonicalize to n-quads, then SHA-256 hash
+  const dataset = await jsonld.toRDF(document, {
+    algorithm: 'RDFC-1.0', base: null, safe: true
+  });
+  const nquads = await rdfCanonize.canonize(dataset, {
+    algorithm: 'RDFC-1.0', format: 'application/n-quads'
+  });
+  const bytes = new TextEncoder().encode(nquads);
+  const hashBytes = new Uint8Array(
+    crypto.createHash('sha256').update(bytes).digest());
+
+  // prepend the sha2-256 multihash header
+  const mhBytes = new Uint8Array(SHA2_256_HEADER.length + hashBytes.length);
+  mhBytes.set(SHA2_256_HEADER, 0);
+  mhBytes.set(hashBytes, SHA2_256_HEADER.length);
+
+  // encode as base58btc multibase (leading 'z')
+  return 'z' + base58Encode(mhBytes);
+}
 ```
 
 ### Calling the witness service with `curl`
@@ -156,15 +192,6 @@ curl --json '{
 }' https://localhost:22443/witnesses/test/witness --insecure
 ```
 
-#### Explicitly requesting `ecdsa-jcs-2019`
-
-```bash
-curl --json '{
-  "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM",
-  "options": {"cryptosuite": "ecdsa-jcs-2019"}
-}' https://localhost:22443/witnesses/test/witness --insecure
-```
-
 #### Requesting `ecdsa-rdfc-2019`
 
 ```bash
@@ -174,7 +201,25 @@ curl --json '{
 }' https://localhost:22443/witnesses/test/witness --insecure
 ```
 
-All three requests return a `DataIntegrityProof` in the response body:
+#### Requesting `mldsa44-jcs-2024` (post-quantum)
+
+```bash
+curl --json '{
+  "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM",
+  "options": {"cryptosuite": "mldsa44-jcs-2024"}
+}' https://localhost:22443/witnesses/test/witness --insecure
+```
+
+#### Requesting `mldsa44-rdfc-2024` (post-quantum)
+
+```bash
+curl --json '{
+  "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM",
+  "options": {"cryptosuite": "mldsa44-rdfc-2024"}
+}' https://localhost:22443/witnesses/test/witness --insecure
+```
+
+All requests return a `DataIntegrityProof` in the response body.
 
 ```json
 {
@@ -189,9 +234,17 @@ All three requests return a `DataIntegrityProof` in the response body:
 }
 ```
 
-The `cryptosuite` field reflects whichever suite was requested.
-`ecdsa-jcs-2019` uses JCS (JSON Canonicalization Scheme) to hash the proof
-options, while `ecdsa-rdfc-2019` uses RDFC-1.0 (RDF Dataset Canonicalization).
+### Supported cryptosuites
+
+| Cryptosuite | Algorithm | Canonicalization |
+|---|---|---|
+| `ecdsa-jcs-2019` (default) | ECDSA P-256 | JCS (RFC 8785) |
+| `ecdsa-rdfc-2019` | ECDSA P-256 | RDFC-1.0 |
+| `mldsa44-jcs-2024` | ML-DSA-44 | JCS (RFC 8785) |
+| `mldsa44-rdfc-2024` | ML-DSA-44 | RDFC-1.0 |
+
+The ML-DSA-44 cryptosuites (`mldsa44-jcs-2024` and `mldsa44-rdfc-2024`) use a
+post-quantum digital signature algorithm standardized in FIPS 204.
 
 ### Running the tests
 
