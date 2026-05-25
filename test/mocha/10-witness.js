@@ -76,6 +76,40 @@ describe('witness API', () => {
       jcsResult.proof.proofValue.should.not.equal(rdfcResult.proof.proofValue);
     });
 
+  it('witness a valid digestMultibase value (mldsa44-jcs-2024)', async () => {
+    let err;
+    let result;
+
+    try {
+      result = await helpers.witness({
+        document: {test: '123'},
+        options: {cryptosuite: 'mldsa44-jcs-2024'}
+      });
+    } catch(e) {
+      err = e;
+    }
+    assertNoError(err);
+    should.exist(result);
+    helpers.assertProof(result.proof, {cryptosuite: 'mldsa44-jcs-2024'});
+  });
+
+  it('mldsa44-jcs-2024 proofValue uses base64url multibase (u prefix)',
+    async () => {
+      let err;
+      let result;
+
+      try {
+        result = await helpers.witness({
+          document: {test: 'mldsa-encoding'},
+          options: {cryptosuite: 'mldsa44-jcs-2024'}
+        });
+      } catch(e) {
+        err = e;
+      }
+      assertNoError(err);
+      result.proof.proofValue.should.match(/^u/);
+    });
+
   it('fail to witness an invalid digestMultibase value', async () => {
     // wrong multibase prefix (not base58btc 'z')
     let result = await helpers.witnessInvalidDigest(
