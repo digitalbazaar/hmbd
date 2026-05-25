@@ -93,6 +93,23 @@ describe('witness API', () => {
     helpers.assertProof(result.proof, {cryptosuite: 'mldsa44-jcs-2024'});
   });
 
+  it('witness a valid digestMultibase value (mldsa44-rdfc-2024)', async () => {
+    let err;
+    let result;
+
+    try {
+      result = await helpers.witness({
+        document: {test: '123'},
+        options: {cryptosuite: 'mldsa44-rdfc-2024'}
+      });
+    } catch(e) {
+      err = e;
+    }
+    assertNoError(err);
+    should.exist(result);
+    helpers.assertProof(result.proof, {cryptosuite: 'mldsa44-rdfc-2024'});
+  });
+
   it('mldsa44-jcs-2024 proofValue uses base64url multibase (u prefix)',
     async () => {
       let err;
