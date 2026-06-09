@@ -1,6 +1,6 @@
 # hmbd Changelog
 
-## 1.0.0 - 2026-04-XX
+## 0.9.0 - 2026-06-09
 
 ### Added
 - Initial release, see individual commits for history.
