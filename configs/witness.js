@@ -1,22 +1,26 @@
 /*!
  * Copyright (c) 2024-2026 Digital Bazaar, Inc.
  */
-import {config} from '@bedrock/core';
+import {config, util} from '@bedrock/core';
 
 config.hmbd.kms = {};
 config.hmbd.signing = {};
 const cfg = config.hmbd;
 
-cfg.kms.baseUrl = `https://localhost:22443/kms`;
-cfg.kms.ipAllowList = ['127.0.0.1/32', '::1/128'];
-// meter ID to use to create keystores (mock dev meter for WebKMS)
-cfg.kms.meterId =
-  'https://localhost:22443/meters/z19ygjQcNmQ9AbG7hCF39Kizs';
+// use computed configuration values
+const c = util.config.main;
+const cc = c.computer();
 
-// stable IDs for the witness signing keystore and keys
-cfg.signing.keystoreId =
-  `${cfg.kms.baseUrl}/keystores/hmbd-witness-keystore-v1`;
-cfg.signing.ecdsaKeyId =
-  `${cfg.signing.keystoreId}/keys/hmbd-witness-ecdsa-signing-key-v1`;
-cfg.signing.mldsaKeyId =
-  `${cfg.signing.keystoreId}/keys/hmbd-witness-mldsa-signing-key-v1`;
+cc({
+  'hmbd.kms.baseUrl': 'https://${server.host}/kms',
+  'hmbd.kms.meterId':
+    'https://${server.host}/meters/z19ygjQcNmQ9AbG7hCF39Kizs',
+  'hmbd.signing.keystoreId':
+    '${hmbd.kms.baseUrl}/keystores/hmbd-witness-keystore-v1',
+  'hmbd.signing.ecdsaKeyId':
+    '${hmbd.signing.keystoreId}/keys/hmbd-witness-ecdsa-signing-key-v1',
+  'hmbd.signing.mldsaKeyId':
+    '${hmbd.signing.keystoreId}/keys/hmbd-witness-mldsa-signing-key-v1'
+});
+
+cfg.kms.ipAllowList = ['0.0.0.0/32', '127.0.0.1/32', '::1/128'];
