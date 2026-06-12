@@ -23,4 +23,4 @@ cc({
     '${hmbd.signing.keystoreId}/keys/hmbd-witness-mldsa-signing-key-v1'
 });
 
-cfg.kms.ipAllowList = ['0.0.0.0/32', '127.0.0.1/32', '::1/128'];
+cfg.kms.ipAllowList = ['127.0.0.1/32', '::1/128'];
