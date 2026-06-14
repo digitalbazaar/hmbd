@@ -20,12 +20,12 @@ const mldsaExport = await mldsaKp.export({publicKey: true, secretKey: true});
 
 console.log(`
 // Place these values into config/secrets.js or your deployment secrets manager
-config.hmbd.ecdsa.publicKeyMultibase =
+config.hmbd.secrets.ecdsa.publicKeyMultibase =
   '${ecdsaExport.publicKeyMultibase}';
-config.hmbd.ecdsa.secretKeyMultibase =
+config.hmbd.secrets.ecdsa.secretKeyMultibase =
   '${ecdsaExport.secretKeyMultibase}';
-config.hmbd.mldsa.publicKeyMultibase =
+config.hmbd.secrets.mldsa.publicKeyMultibase =
   '${mldsaExport.publicKeyMultibase}';
-config.hmbd.mldsa.secretKeyMultibase =
+config.hmbd.secrets.mldsa.secretKeyMultibase =
   '${mldsaExport.secretKeyMultibase}';
 `);

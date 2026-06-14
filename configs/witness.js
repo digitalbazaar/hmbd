@@ -3,6 +3,4 @@
  */
 import {config} from '@bedrock/core';
 
-config.hmbd.signing = {};
-config.hmbd.ecdsa = {};
-config.hmbd.mldsa = {};
+config.hmbd.secrets = {ecdsa: {}, mldsa: {}};
