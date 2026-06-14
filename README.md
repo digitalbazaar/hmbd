@@ -221,7 +221,7 @@ curl --json '{
 }' https://localhost:22443/witness --insecure
 ```
 
-#### Requesting `mldsa44-jcs-2024` (post-quantum)
+#### Requesting `mldsa44-jcs-2024` (quantum-resistant)
 
 ```bash
 curl --json '{
@@ -230,7 +230,7 @@ curl --json '{
 }' https://localhost:22443/witness --insecure
 ```
 
-#### Requesting `mldsa44-rdfc-2024` (post-quantum)
+#### Requesting `mldsa44-rdfc-2024` (quantum-resistant)
 
 ```bash
 curl --json '{
@@ -264,7 +264,7 @@ All requests return a `DataIntegrityProof` in the response body.
 | `mldsa44-rdfc-2024` | ML-DSA-44 | RDFC-1.0 |
 
 The ML-DSA-44 cryptosuites (`mldsa44-jcs-2024` and `mldsa44-rdfc-2024`) use a
-post-quantum digital signature algorithm standardized in FIPS 204.
+quantum-resistant digital signature algorithm standardized in FIPS 204.
 
 ### Running the tests
 
@@ -285,7 +285,3 @@ If editing the README, please conform to the
 
 Commercial support for this service is available upon request from
 Digital Bazaar: support@digitalbazaar.com
-
-## License
-
-[GNU Affero General Public License (AGPL)](LICENSE) © 2024-2026 Digital Bazaar
