@@ -113,10 +113,8 @@ relevant defaults are:
 |---|---|
 | HTTPS port | `22443` |
 | Domain | `localhost` |
-| Witness endpoint | `https://localhost:22443/witnesses/:localId/witness` |
+| Witness endpoint | `https://localhost:22443/witness` |
 
-`:localId` is any identifier you want to use for now. In the future, it might
-be a permissioned endpoint to rate limit calls to the service.
 
 ### Configuration
 
@@ -212,7 +210,7 @@ identifies the witness instance (use `test` in development).
 ```bash
 curl --json '{
   "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM"
-}' https://localhost:22443/witnesses/test/witness --insecure
+}' https://localhost:22443/witness --insecure
 ```
 
 #### Requesting `ecdsa-rdfc-2019`
@@ -221,7 +219,7 @@ curl --json '{
 curl --json '{
   "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM",
   "options": {"cryptosuite": "ecdsa-rdfc-2019"}
-}' https://localhost:22443/witnesses/test/witness --insecure
+}' https://localhost:22443/witness --insecure
 ```
 
 #### Requesting `mldsa44-jcs-2024` (post-quantum)
@@ -230,7 +228,7 @@ curl --json '{
 curl --json '{
   "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM",
   "options": {"cryptosuite": "mldsa44-jcs-2024"}
-}' https://localhost:22443/witnesses/test/witness --insecure
+}' https://localhost:22443/witness --insecure
 ```
 
 #### Requesting `mldsa44-rdfc-2024` (post-quantum)
@@ -239,7 +237,7 @@ curl --json '{
 curl --json '{
   "digestMultibase": "zQmYGx7Wzqe5prvEsTSzYBQN8xViYUM9qsWJSF5EENLcNmM",
   "options": {"cryptosuite": "mldsa44-rdfc-2024"}
-}' https://localhost:22443/witnesses/test/witness --insecure
+}' https://localhost:22443/witness --insecure
 ```
 
 All requests return a `DataIntegrityProof` in the response body.
