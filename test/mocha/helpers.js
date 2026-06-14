@@ -18,7 +18,10 @@ const RDFC_SUITES = new Set(['ecdsa-rdfc-2019', 'mldsa44-rdfc-2024']);
 export async function witnessInvalidDigest({digestMultibase, options} = {}) {
   const baseUrl = config.server.baseUri;
   const url = `${baseUrl}/witness`;
-  const body = {digestMultibase, ...(options && {options})};
+  const body = {digestMultibase};
+  if(options) {
+    body.options = options;
+  }
 
   return httpClient.post(url, {agent, json: body, throwHttpErrors: false});
 }
@@ -69,7 +72,10 @@ export async function witness({document, options} = {}) {
 
   const baseUrl = config.server.baseUri;
   const url = `${baseUrl}/witness`;
-  const body = {digestMultibase, ...(options && {options})};
+  const body = {digestMultibase};
+  if(options) {
+    body.options = options;
+  }
 
   const response = await httpClient.post(url, {agent, json: body});
   return response.data;

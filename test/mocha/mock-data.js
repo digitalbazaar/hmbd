@@ -1,11 +1,7 @@
 /*!
  * Copyright (c) 2024-2026 Digital Bazaar, Inc.
  */
-import {config} from '@bedrock/core';
-
 export const mockData = {};
-
-mockData.baseUrl = config.server.baseUri;
 
 // A minimal JSON-LD document with an inline context for use in tests.
 // JCS cryptosuites canonicalize this with JCS (RFC 8785).
