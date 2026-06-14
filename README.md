@@ -11,7 +11,6 @@ establish proof that your data existed at a specific point in time.
 - [Usage](#usage)
 - [Contribute](#contribute)
 - [Commercial Support](#commercial-support)
-- [License](#license)
 
 ## Background
 
@@ -27,6 +26,8 @@ Proving that you jumped a motorbike over a chasm last Monday? Establishing a
 date for your last will and testament? Or just rotating a public cryptographic
 key in your decentralized identifier document? Like a hopelessly loyal friend,
 `hmbd` has your back, no matter what you do.
+
+<img width="1024" height="377" alt="image" src="https://github.com/user-attachments/assets/917be556-43f1-4a82-9d7c-3ffcec3e7f24" />
 
 Be glorious.
 
