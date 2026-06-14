@@ -14,7 +14,7 @@ RUN npm i --omit=optional --omit=dev
 
 FROM build AS test
 #RUN cd test && npm t
-RUN rm -rf test
+RUN rm -rf test bin
 
 FROM base AS release
 COPY --from=test --chown=node:node /home/node/app ./

@@ -5,6 +5,7 @@
   "main": "./lib/index.js",
   "type": "module",
   "scripts": {
+    "generate-signing-keys": "node bin/generate-signing-keys.js",
     "start": "node --preserve-symlinks dev.js",
     "lint": "eslint .",
     "test": "npm run lint && npm run test-node",
@@ -20,16 +21,7 @@
     "@bedrock/express": "^8.3.1",
     "@bedrock/health": "^4.1.0",
     "@bedrock/https-agent": "^4.1.0",
-    "@bedrock/kms": "^16.0.0",
-    "@bedrock/kms-http": "^22.0.0",
-    "@bedrock/kms-module-core": "^1.1.0",
-    "@bedrock/meter": "^6.0.0",
-    "@bedrock/meter-http": "^14.0.0",
-    "@bedrock/meter-usage-reporter": "^10.0.0",
-    "@bedrock/mongodb": "^11.0.0",
     "@bedrock/server": "^5.1.0",
-    "@bedrock/service-core": "^11.0.0",
-    "@bedrock/ssm-mongodb": "^13.0.0",
     "@bedrock/validation": "^7.1.1",
     "@digitalbazaar/data-integrity-context": "^2.0.1",
     "@digitalbazaar/ecdsa-jcs-2019-cryptosuite": "^1.0.0",
@@ -38,10 +30,8 @@
     "@digitalbazaar/mldsa-multikey": "^1.0.0",
     "@digitalbazaar/mldsa44-jcs-2024-cryptosuite": "^1.0.0",
     "@digitalbazaar/mldsa44-rdfc-2024-cryptosuite": "^1.0.0",
-    "@digitalbazaar/webkms-client": "^14.3.0",
     "base58-universal": "^2.0.0",
-    "canonicalize": "^2.1.0",
-    "jsonld-signatures": "^11.6.0"
+    "canonicalize": "^2.1.0"
   },
   "devDependencies": {
     "@bedrock/test": "^8.2.0",

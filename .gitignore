@@ -103,6 +103,9 @@ dist
 # TernJS port file
 .tern-port
 
+# Signing keys - must not be committed; generate with: npm run generate-signing-keys
+configs/secrets.js
+
 # VSCode
 .vscode
 

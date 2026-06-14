@@ -85,6 +85,18 @@ cd hmbd
 npm install
 ```
 
+### Generating signing keys
+
+Before starting the service for the first time, generate a signing key pair:
+
+```
+npm run generate-signing-keys
+```
+
+This prints ECDSA P-256 and ML-DSA-44 key values to stdout. Copy the output
+into `configs/secrets.js` (for development) or supply the values via a secrets
+manager in your deployment configuration.
+
 ### Running in development mode
 
 The service uses [Bedrock](https://github.com/digitalbazaar/bedrock) and starts
@@ -94,10 +106,6 @@ an HTTPS server on `localhost:22443` by default. To start it:
 npm start
 ```
 
-On first start the service will automatically create a WebKMS keystore and
-generate a P-256 signing key for ECDSA cryptosuites and an ML-DSA-44 signing
-key for post-quantum cryptosuites.
-
 The development server configuration lives in `configs/` and `dev.js`. The
 relevant defaults are:
 
@@ -105,11 +113,26 @@ relevant defaults are:
 |---|---|
 | HTTPS port | `22443` |
 | Domain | `localhost` |
-| KMS base URL | `https://localhost:22443/kms` |
 | Witness endpoint | `https://localhost:22443/witnesses/:localId/witness` |
 
 `:localId` is any identifier you want to use for now. In the future, it might
 be a permissioned endpoint to rate limit calls to the service.
+
+### Configuration
+
+Signing keys are loaded from `configs/secrets.js` at startup. The file sets
+four values on the `config.hmbd` object:
+
+| Key | Description |
+|---|---|
+| `config.hmbd.ecdsa.publicKeyMultibase` | ECDSA P-256 public key (base58btc multibase) |
+| `config.hmbd.ecdsa.secretKeyMultibase` | ECDSA P-256 secret key (base58btc multibase) |
+| `config.hmbd.mldsa.publicKeyMultibase` | ML-DSA-44 public key (base64url multibase) |
+| `config.hmbd.mldsa.secretKeyMultibase` | ML-DSA-44 secret key (base64url multibase) |
+
+Keys are loaded in-process at startup — no external key management service is
+required. In production, supply the key values via a secrets manager rather
+than committing them to `configs/secrets.js`.
 
 ## Usage
 
