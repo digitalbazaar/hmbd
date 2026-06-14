@@ -1,6 +1,6 @@
 {
   "name": "hmbd",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "A service that performs blind witnessing",
   "main": "./lib/index.js",
   "type": "module",
