@@ -11,7 +11,7 @@ USER node
 COPY --chown=node:node . .
 RUN mv dev.js index.js
 RUN npm i --omit=optional --omit=dev
-RUN rm -rf test bin
+RUN rm -rf test bin test.js test.config.js
 
 FROM base AS release
 COPY --from=build --chown=node:node /home/node/app ./
