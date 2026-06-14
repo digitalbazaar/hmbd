@@ -202,8 +202,7 @@ async function computeDigestMultibaseRdfc(document) {
 
 ### Calling the witness service with `curl`
 
-The service exposes a single `POST` endpoint. The `localId` path segment
-identifies the witness instance (use `test` in development).
+The service exposes a single `POST` endpoint.
 
 #### Using the default cryptosuite (`ecdsa-jcs-2019`)
 
