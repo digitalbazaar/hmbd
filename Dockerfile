@@ -11,13 +11,10 @@ USER node
 COPY --chown=node:node . .
 RUN mv dev.js index.js
 RUN npm i --omit=optional --omit=dev
-
-FROM build AS test
-#RUN cd test && npm t
 RUN rm -rf test bin
 
 FROM base AS release
-COPY --from=test --chown=node:node /home/node/app ./
+COPY --from=build --chown=node:node /home/node/app ./
 EXPOSE 10443
 ENV NODE_ENV=production
 CMD [ "node", "index"]
