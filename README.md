@@ -65,6 +65,8 @@ You are encouraged to call this service other things, like:
 
 ... and so on; as long as it's funny.
 
+<img width="1024" height="377" alt="image" src="https://github.com/user-attachments/assets/c3e4f446-1de1-420d-a66f-08248d596849" />
+
 ## Security
 
 As with most security- and cryptography-related tools, the overall security of
