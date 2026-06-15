@@ -118,23 +118,6 @@ relevant defaults are:
 | Domain | `localhost` |
 | Witness endpoint | `https://localhost:22443/witness` |
 
-
-### Configuration
-
-Signing keys are loaded from `configs/secrets.js` at startup. The file sets
-four values on the `config.hmbd` object:
-
-| Key | Description |
-|---|---|
-| `config.hmbd.ecdsa.publicKeyMultibase` | ECDSA P-256 public key (base58btc multibase) |
-| `config.hmbd.ecdsa.secretKeyMultibase` | ECDSA P-256 secret key (base58btc multibase) |
-| `config.hmbd.mldsa.publicKeyMultibase` | ML-DSA-44 public key (base64url multibase) |
-| `config.hmbd.mldsa.secretKeyMultibase` | ML-DSA-44 secret key (base64url multibase) |
-
-Keys are loaded in-process at startup — no external key management service is
-required. In production, supply the key values via a secrets manager rather
-than committing them to `configs/secrets.js`.
-
 ## Usage
 
 ### Computing a `digestMultibase` on the client side
