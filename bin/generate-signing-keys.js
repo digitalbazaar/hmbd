@@ -19,7 +19,7 @@ const mldsaKp = await MldsaMultikey.generate();
 const mldsaExport = await mldsaKp.export({publicKey: true, secretKey: true});
 
 console.log(`
-// Place these values into config/secrets.js or your deployment secrets manager
+// Place these values into configs/secrets.js or your deployment secrets manager
 import {config} from '@bedrock/core';
 
 config.hmbd.secrets.ecdsa.publicKeyMultibase =
